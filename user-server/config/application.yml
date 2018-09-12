@@ -1,0 +1,55 @@
+server:
+  port: 9017
+
+spring:
+  application:
+    name: user-server
+  redis:
+    hostName: 120.26.130.187
+    port: 6379
+    timeout: 20000
+    password: jsy2017++
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+  datasource:
+    sql:
+      show: false
+    mybatis:
+      configLocation: classpath:mybatis-config.xml
+      mapper-locations: classpath*:sqlmap/*.xml
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    druid:
+      master:  #数据源1
+        url: jdbc:mysql://18.16.200.42:3306/zss_st?Unicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=round&allowMultiQueries=true
+        username: root
+        password: shitou$root
+      slave:  #数据源2
+        url: jdbc:mysql://18.16.200.42:3306/zss_st?Unicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=round&allowMultiQueries=true
+        username: root
+        password: shitou$root
+      filters: stat
+      maxActive: 20
+      initialSize: 1
+      maxWait: 60000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 1
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 20
+logging:
+  config: ${spring.config.location}/logback.xml
+#ribbon超时配置
+ribbon:
+  #读取超时
+  ReadTimeout: 60000
+  #连接超时
+  ConnectTimeout: 30000
